@@ -95,7 +95,7 @@ public class BurgerTest {
     }
 
 
-    public Burger createBurger() {
+    private Burger createBurger() {
         Burger burger = new Burger();
         burger.setBuns(bun);
 
