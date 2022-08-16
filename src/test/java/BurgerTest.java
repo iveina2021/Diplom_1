@@ -2,10 +2,12 @@ import org.assertj.core.data.Index;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import praktikum.Bun;
 import praktikum.Burger;
 import praktikum.Ingredient;
+import praktikum.IngredientType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,10 +22,6 @@ public class BurgerTest {
 
     @Mock
     private Ingredient secondIngredient;
-
-    public BurgerTest(Bun bun) {
-        this.bun = bun;
-    }
 
     @Test
     public void burgerSetBuns() {
@@ -62,17 +60,29 @@ public class BurgerTest {
     @Test
     public void burgerGetPrice() {
         Burger burger = createBurger();
+        Mockito.when(bun.getPrice()).thenReturn(2.5f);
+        Mockito.when(firstIngredient.getPrice()).thenReturn(1.5f);
+        Mockito.when(secondIngredient.getPrice()).thenReturn(0.5f);
 
         float burgerPrice = burger.getPrice();
 
-        // Mockito.when(burger.getPrice)).thenReturn(6742);
-
-        assertThat(burgerPrice).isEqualTo(6742);
+        assertThat(burgerPrice).isEqualTo(7);
     }
 
     @Test
     public void burgerGetReceipt() {
         Burger burger = createBurger();
+
+        Mockito.when(bun.getName()).thenReturn("Краторная булка N-200i");
+        Mockito.when(firstIngredient.getName()).thenReturn("Соус Spicy-X");
+        Mockito.when(secondIngredient.getName()).thenReturn("Сыр с астероидной плесенью");
+
+        Mockito.when(bun.getPrice()).thenReturn(2.5f);
+        Mockito.when(firstIngredient.getPrice()).thenReturn(1.5f);
+        Mockito.when(secondIngredient.getPrice()).thenReturn(0.5f);
+
+        Mockito.when(firstIngredient.getType()).thenReturn(IngredientType.SAUCE);
+        Mockito.when(secondIngredient.getType()).thenReturn(IngredientType.FILLING);
 
         String burgerReceiptActual = burger.getReceipt();
 
@@ -81,7 +91,7 @@ public class BurgerTest {
                 "= filling Сыр с астероидной плесенью =\n" +
                 "(==== Краторная булка N-200i ====)\n" +
                 "\n" +
-                "Price: 6742.000000\n");
+                "Price: 7.000000\n");
     }
 
 
