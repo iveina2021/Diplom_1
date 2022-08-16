@@ -2,7 +2,6 @@ import org.assertj.core.data.Index;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import praktikum.Bun;
 import praktikum.Burger;
@@ -10,6 +9,7 @@ import praktikum.Ingredient;
 import praktikum.IngredientType;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
@@ -60,9 +60,9 @@ public class BurgerTest {
     @Test
     public void burgerGetPrice() {
         Burger burger = createBurger();
-        Mockito.when(bun.getPrice()).thenReturn(2.5f);
-        Mockito.when(firstIngredient.getPrice()).thenReturn(1.5f);
-        Mockito.when(secondIngredient.getPrice()).thenReturn(0.5f);
+        when(bun.getPrice()).thenReturn(2.5f);
+        when(firstIngredient.getPrice()).thenReturn(1.5f);
+        when(secondIngredient.getPrice()).thenReturn(0.5f);
 
         float burgerPrice = burger.getPrice();
 
@@ -73,16 +73,16 @@ public class BurgerTest {
     public void burgerGetReceipt() {
         Burger burger = createBurger();
 
-        Mockito.when(bun.getName()).thenReturn("Краторная булка N-200i");
-        Mockito.when(firstIngredient.getName()).thenReturn("Соус Spicy-X");
-        Mockito.when(secondIngredient.getName()).thenReturn("Сыр с астероидной плесенью");
+        when(bun.getName()).thenReturn("Краторная булка N-200i");
+        when(firstIngredient.getName()).thenReturn("Соус Spicy-X");
+        when(secondIngredient.getName()).thenReturn("Сыр с астероидной плесенью");
 
-        Mockito.when(bun.getPrice()).thenReturn(2.5f);
-        Mockito.when(firstIngredient.getPrice()).thenReturn(1.5f);
-        Mockito.when(secondIngredient.getPrice()).thenReturn(0.5f);
+        when(bun.getPrice()).thenReturn(2.5f);
+        when(firstIngredient.getPrice()).thenReturn(1.5f);
+        when(secondIngredient.getPrice()).thenReturn(0.5f);
 
-        Mockito.when(firstIngredient.getType()).thenReturn(IngredientType.SAUCE);
-        Mockito.when(secondIngredient.getType()).thenReturn(IngredientType.FILLING);
+        when(firstIngredient.getType()).thenReturn(IngredientType.SAUCE);
+        when(secondIngredient.getType()).thenReturn(IngredientType.FILLING);
 
         String burgerReceiptActual = burger.getReceipt();
 
