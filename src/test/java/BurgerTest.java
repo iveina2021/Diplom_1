@@ -1,18 +1,33 @@
 import org.assertj.core.data.Index;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import praktikum.Bun;
 import praktikum.Burger;
 import praktikum.Ingredient;
-import praktikum.IngredientType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
+
+    @Mock
+    private Bun bun;
+
+    @Mock
+    private Ingredient firstIngredient;
+
+    @Mock
+    private Ingredient secondIngredient;
+
+    public BurgerTest(Bun bun) {
+        this.bun = bun;
+    }
 
     @Test
     public void burgerSetBuns() {
         Burger burger = new Burger();
-        Bun bun = new Bun("Краторная булка N-200i", 1255);
 
         burger.setBuns(bun);
 
@@ -21,22 +36,14 @@ public class BurgerTest {
 
     @Test
     public void burgerAddIngredient() {
-        Bun bun = new Bun("Краторная булка N-200i", 1255);
-        Ingredient firstIngredient = new Ingredient(IngredientType.SAUCE, "Соус Spicy-X", 90);
-        Ingredient secondsIngredient = new Ingredient(IngredientType.FILLING, "Сыр с астероидной плесенью", 4142);
+        Burger burger = createBurger();
 
-        Burger burger = createBurger(bun, firstIngredient, secondsIngredient);
-
-        assertThat(burger.ingredients).containsExactly(firstIngredient, secondsIngredient);
+        assertThat(burger.ingredients).containsExactly(firstIngredient, secondIngredient);
     }
 
     @Test
     public void burgerRemoveIngredient() {
-        Bun bun = new Bun("Краторная булка N-200i", 1255);
-        Ingredient firstIngredient = new Ingredient(IngredientType.SAUCE, "Соус Spicy-X", 90);
-        Ingredient secondsIngredient = new Ingredient(IngredientType.FILLING, "Сыр с астероидной плесенью", 4142);
-
-        Burger burger = createBurger(bun, firstIngredient, secondsIngredient);
+        Burger burger = createBurger();
 
         burger.removeIngredient(0);
 
@@ -45,11 +52,7 @@ public class BurgerTest {
 
     @Test
     public void burgerMoveIngredient() {
-        Bun bun = new Bun("Краторная булка N-200i", 1255);
-        Ingredient firstIngredient = new Ingredient(IngredientType.SAUCE, "Соус Spicy-X", 90);
-        Ingredient secondsIngredient = new Ingredient(IngredientType.FILLING, "Сыр с астероидной плесенью", 4142);
-
-        Burger burger = createBurger(bun, firstIngredient, secondsIngredient);
+        Burger burger = createBurger();
 
         burger.moveIngredient(0, 1);
 
@@ -58,24 +61,18 @@ public class BurgerTest {
 
     @Test
     public void burgerGetPrice() {
-        Bun bun = new Bun("Краторная булка N-200i", 1255);
-        Ingredient firstIngredient = new Ingredient(IngredientType.SAUCE, "Соус Spicy-X", 90);
-        Ingredient secondsIngredient = new Ingredient(IngredientType.FILLING, "Сыр с астероидной плесенью", 4142);
-
-        Burger burger = createBurger(bun, firstIngredient, secondsIngredient);
+        Burger burger = createBurger();
 
         float burgerPrice = burger.getPrice();
+
+        // Mockito.when(burger.getPrice)).thenReturn(6742);
 
         assertThat(burgerPrice).isEqualTo(6742);
     }
 
     @Test
     public void burgerGetReceipt() {
-        Bun bun = new Bun("Краторная булка N-200i", 1255);
-        Ingredient firstIngredient = new Ingredient(IngredientType.SAUCE, "Соус Spicy-X", 90);
-        Ingredient secondsIngredient = new Ingredient(IngredientType.FILLING, "Сыр с астероидной плесенью", 4142);
-
-        Burger burger = createBurger(bun, firstIngredient, secondsIngredient);
+        Burger burger = createBurger();
 
         String burgerReceiptActual = burger.getReceipt();
 
@@ -88,7 +85,7 @@ public class BurgerTest {
     }
 
 
-    public Burger createBurger(Bun bun, Ingredient firstIngredient, Ingredient secondIngredient) {
+    public Burger createBurger() {
         Burger burger = new Burger();
         burger.setBuns(bun);
 
